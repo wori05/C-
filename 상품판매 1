@@ -1,0 +1,69 @@
+#include <stdio.h>
+
+#define MAX_PRODUCTS 100
+
+typedef struct {
+    int id;           // 상품 ID
+    int stock;        // 입고 수량
+    int sold;         // 판매 수량
+    int remaining;    // 남은 재고
+} Product;
+
+int main() {
+    int n, i, searchId, found = 0;
+
+    // 사용자로부터 상품 개수 입력
+    printf("상품 개수를 입력하세요: ");
+    scanf("%d", &n);
+
+    if (n < 1 || n > MAX_PRODUCTS) {
+        printf("상품 개수는 1에서 100 사이여야 합니다.\n");
+        return 1;
+    }
+
+    Product products[MAX_PRODUCTS];
+
+    // 각 상품의 정보 입력
+    for (i = 0; i < n; i++) {
+        products[i].id = i + 1; // 고유 ID는 1부터 시작
+        printf("상품 ID %d의 입고 수량을 입력하세요: ", products[i].id);
+        scanf("%d", &products[i].stock);
+        
+        printf("상품 ID %d의 판매 수량을 입력하세요: ", products[i].id);
+        scanf("%d", &products[i].sold);
+
+        // 남은 재고 계산
+        products[i].remaining = products[i].stock - products[i].sold;
+
+        // 입력 값이 올바른지 확인
+        if (products[i].remaining < 0) {
+            printf("판매 수량이 입고 수량보다 클 수 없습니다.\n");
+            return 1;
+        }
+    }
+
+    // 결과 출력
+    printf("\n상품 별 남은 재고:\n");
+    for (i = 0; i < n; i++) {
+        printf("상품 ID %d - 남은 재고: %d\n", products[i].id, products[i].remaining);
+    }
+
+    // 사용자에게 상품 ID를 입력받아 해당 상품의 재고를 출력
+    printf("\n조회할 상품 ID를 입력하세요: ");
+    scanf("%d", &searchId);
+
+    // 해당 ID의 재고를 찾고 출력
+    for (i = 0; i < n; i++) {
+        if (products[i].id == searchId) {
+            printf("상품 ID %d의 남은 재고는 %d개 입니다.\n", products[i].id, products[i].remaining);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("상품 ID %d는 존재하지 않습니다.\n", searchId);
+    }
+
+    return 0;
+}
