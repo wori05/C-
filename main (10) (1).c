@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char src[100];
+    char dest[100];
+    int result;
+    int length;
+    gets(src);
+    gets(dest);
+    length = strlen(src);
+    printf("length of src = %d\n", length);
+    strcpy(dest, src);
+    printf("src = %s, dest = %s\n", src, dest);
+    strcpy(dest, src);
+    printf("src = %s, dest = %s\n", src, dest);
+    result = strcmp(src, dest);
+    printf("result = %d\n", result);
+    
+    return 0;
+}
